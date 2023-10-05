@@ -8,3 +8,5 @@ folders = \
 
 fullPath = os.path.join(path,projectname)
 os.mkdir(fullPath)
+
+
