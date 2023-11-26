@@ -1,60 +1,67 @@
 
-
-from bs4 import BeautifulSoup
-import requests
+import time
 import os
-
-URL = "https://yandex.ru/images/"
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
-}
+import requests
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 
-
-def get_image(image_url, name, index):
+def get_img(img_link, name, index):
     if not os.path.isdir(name):
         os.mkdir(name)
-    picture = requests.get(f"https:{image_url}", HEADERS, timeout=1)
+    picture = requests.get(img_link)
     saver = open(os.path.join(f"{name}/{str(index).zfill(4)}.jpg"), "wb")
     saver.write(picture.content)
     saver.close()
 
-def download_img(path, key):
+
+def download_img(path, key) -> None:  
+
     os.chdir(path)
     if not os.path.isdir("dataset"):
         os.mkdir("dataset")
     os.chdir("dataset")
-    
+
     count = 0
     page = 0
     
-    while count < 1000:
+    while (count < 1000):
+         
         key1=key.replace(" ", "%20")
-        url = f'{URL}search?from=tabbar&text={key}'
-        print(f"Fetching URL: {url}")
-        
-        response = requests.get(url, headers=HEADERS, timeout=1)
-        
-        soup = BeautifulSoup(response.text, "lxml")
-        images = soup.findAll('img', class_='serp-item__thumb justifier__thumb')
-        if not images:
-            print("No images found on this page.")
-            break
+        url = f"https://yandex.ru/images/search?p={page}&text={key1}"
+        driver = webdriver.Chrome()
+        driver.get(url = url)
+        time.sleep(5)
 
-        for image in images:
-            if count == 1000:
-                return
-            image_url = image.get("src")
-            if image_url and not image_url.startswith("data:"):
-                get_image(image_url, key, count)
-                count += 1
-        print(count)
+        try:
+            _ = driver.find_elements( By.CLASS_NAME, 'CheckboxCaptcha')
+            input('Enter после капчи')
+            driver.get(url = url)
+            time.sleep(5)
+        except Exception as e:
+            print('Капчи нет')
+
+        imgs = driver.find_elements( By.CLASS_NAME, 'SimpleImage-Image')
+        print( imgs )
+
+
+
+        for img in imgs:
+           img_link = img.get_attribute('src') 
+           get_img(img_link, key, count)
+           count += 1
+           print(img_link)
         page += 1
+    driver.close()
+    driver.quit()
+
 
 def main():
     directory = os.getcwd()
-    download_img(directory, 'cats')
-    download_img(directory, 'dog')
+    key = 'cats'
+    download_img(directory, key)
+    
 if __name__ == "__main__":
     main()
 
+    
