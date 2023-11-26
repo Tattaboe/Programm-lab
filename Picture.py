@@ -35,11 +35,11 @@ def download_img(path, key) -> None:
 
         try:
             _ = driver.find_elements( By.CLASS_NAME, 'CheckboxCaptcha')
-            input('Enter после капчи')
+            input('Press enter after the captcha appears')
             driver.get(url = url)
             time.sleep(5)
         except Exception as e:
-            print('Капчи нет')
+            print('Captcha missing')
 
         imgs = driver.find_elements( By.CLASS_NAME, 'SimpleImage-Image')
         print( imgs )
