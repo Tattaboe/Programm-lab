@@ -58,7 +58,7 @@ def download_img(path, key) -> None:
 
 def main():
     directory = os.getcwd()
-    key = 'cats'
+    key = 'dogs'
     download_img(directory, key)
     
 if __name__ == "__main__":
