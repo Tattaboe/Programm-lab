@@ -34,20 +34,15 @@ def rename_images(root_dir, class_name):
 
 
 def main():
-    # Определяем имена классов
+  
     class_names = ["cats", "dogs"]
 
-    # Удаляем существующую директорию "dataset2", если она существует.
     shutil.rmtree("dataset2", ignore_errors=True)
-
-    # Копируем содержимое директории "dataset" в новую директорию "dataset2"
     shutil.copytree("dataset", "dataset2")
 
-    # Заменяем имена изображений и дополняем ведущими нулями
     for class_name in class_names:
         rename_images("dataset2", class_name)
 
-    # Создаем CSV-файл "paths2.csv" и записываем пути к изображениям
     with open("annotation2.csv", "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["abs_path", "rel_path", "class"])
