@@ -1,5 +1,4 @@
 
-
 import os
 import shutil
 import csv
@@ -40,8 +39,20 @@ def main():
     shutil.rmtree("dataset2", ignore_errors=True)
     shutil.copytree("dataset", "dataset2")
 
+    
+
     for class_name in class_names:
         rename_images("dataset2", class_name)
+        
+        
+    for root, dirs, files in os.walk("dataset2"):
+        for file in files:
+            src_file = os.path.join(root, file)
+            dst_file = os.path.join("dataset2", file)
+            shutil.move(src_file, dst_file)
+
+   
+           
 
     with open("annotation2.csv", "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
@@ -51,8 +62,8 @@ def main():
             for abs_path, rel_path in zip(abs_paths, rel_paths):
                 writer.writerow([abs_path, rel_path, class_name])
 
-
+    os.rmdir('dataset2/cats')
+    os.rmdir('dataset2/dogs')
+    
 if __name__ == "__main__":
     main()
-
-
