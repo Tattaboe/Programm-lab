@@ -26,7 +26,7 @@ def get_full_paths(class_name: str) -> List[str]:
     return image_full_paths
 
 
-def main() -> None:
+def creating_annotation():
     dataset_path = "dataset"
     classes = ["cats", "dogs"]
 
@@ -44,4 +44,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    creating_annotation()

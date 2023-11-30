@@ -32,7 +32,7 @@ def rename_images(root_dir, class_name):
         os.rename(old_path, new_path)
 
 
-def main():
+def dataset2():
   
     class_names = ["cats", "dogs"]
 
@@ -53,7 +53,7 @@ def main():
 
    
            
-
+def creating_annotation2():
     with open("annotation2.csv", "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["abs_path", "rel_path", "class"])
@@ -66,4 +66,5 @@ def main():
     os.rmdir('dataset2/dogs')
     
 if __name__ == "__main__":
-    main()
+   dataset2()
+   creating_annotation()

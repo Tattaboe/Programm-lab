@@ -14,14 +14,14 @@ def get_new_rel_path():
     rand_num = random.sample(range(0, 10001), 2005)
     return [os.path.join('dataset3', f'{num}.jpg') for num in rand_num]
 
-def main():
+def dataset3():
 
     remove_directory('dataset3')
     os.mkdir('dataset3')
     for old_path, new_path in zip(get_old_rel_path(), get_new_rel_path()):
         shutil.copyfile(old_path, new_path)
 
-
+def creating_annotation3():
     old_rel_paths = get_old_rel_path()
     new_rel_paths = get_new_rel_path()
     with open('annotation3.csv', 'w') as csv_file:
@@ -32,4 +32,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    dataset3()
+    creating_annotation3()
