@@ -27,7 +27,7 @@
      <bool>false</bool>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideNone</enum>
@@ -110,33 +110,51 @@
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>Открыть папку</string>
+     <string>Файл</string>
     </property>
+    <addaction name="action_2"/>
+    <addaction name="action_3"/>
    </widget>
    <widget class="QMenu" name="menu_Dataset">
     <property name="title">
-     <string>Создание dataset</string>
+     <string>Dataset</string>
     </property>
     <addaction name="actiondataset2"/>
+    <addaction name="action_Dataset3"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
-     <string>Создание аннотации</string>
+     <string>Аннотация</string>
     </property>
-   </widget>
-   <widget class="QMenu" name="menu_3">
-    <property name="title">
-     <string>Выход</string>
-    </property>
+    <addaction name="action_C_Dataset"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_Dataset"/>
    <addaction name="menu_2"/>
-   <addaction name="menu_3"/>
   </widget>
   <action name="actiondataset2">
    <property name="text">
-    <string>dataset2</string>
+    <string>&amp; Создать Dataset2</string>
+   </property>
+  </action>
+  <action name="action_Dataset3">
+   <property name="text">
+    <string>Создать Dataset3</string>
+   </property>
+  </action>
+  <action name="action_C_Dataset">
+   <property name="text">
+    <string>&amp;Cоздать аннотацию исходного Dataset</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>&amp;Выбрать папку</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>&amp;Выход</string>
    </property>
   </action>
  </widget>
