@@ -1,47 +1,45 @@
-import os
 import csv
-from typing import List
+import os
+import typing
 
 
-def get_full_paths(class_name: str) -> List[str]:
-    """
-    Возвращает список абсолютных путей для изображений
+def write_file(file_name: str, data: list[list[str]]) -> None:
+    '''Записывает данные в csv файл
+     Parameters
+    ----------
+    file_name(str) : Файл аннотации
+    data: (list[list[str]]): Данные 
+    '''
+    file: typing.TextIO = open(file_name, "w")
+    writer: csv.writer = csv.writer(file, delimiter=",")
+    for row in data:
+        writer.writerow(row)
+    file.close()
 
-    Данная функция возвращает список абсолютных путей для всех изображений определенного
-    класса, переданного в функцию
+
+def create_annotation(path_data: str, path_to_annotation: str) -> None:
+    '''Создаёт аннотацию
     Parameters
     ----------
-    class_name : str
-      Имя класса
-    Returns
-    -------
-    list
-    Список абсолютных путей к изображениям
-    """
-    full_path = os.path.abspath('dataset')
-    class_path = os.path.join(full_path, class_name)
-    image_names = os.listdir(class_path)
-    image_full_paths = list(
-        map(lambda name: os.path.join(class_path, name), image_names))
-    return image_full_paths
+    path_data(str): Путь до данных 
+    path_to_annotation(str): Путь до аннотации
+    '''
+    data: list[list[str]] = [["full_path", "path", "class"]]
 
+    dirs: list[str] = os.listdir(path_data)
 
-def creating_annotation():
-    dataset_path = "dataset"
-    classes = ["cats", "dogs"]
+    for dir in dirs:
+        path: str = os.path.join(path_data, dir)
+        files: list[str] = os.listdir(path)
+        for file in files:
+            data.append([os.path.abspath(os.path.join(path, file)),
+                         os.path.join(path, file),
+                         dir])
 
-    with open("annotation.csv", "w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["full_path", "relative_path", "class"])
-
-        for class_name in classes:
-            class_path = os.path.join(dataset_path, class_name)
-            full_paths = get_full_paths(class_name)
-
-            for full_path in full_paths:
-                relative_path = os.path.relpath(full_path, dataset_path)
-                writer.writerow([full_path, relative_path, class_name])
+    write_file(file_name=path_to_annotation, data=data)
 
 
 if __name__ == "__main__":
-    creating_annotation()
+    path_to_annotation: str = "annotation.csv"
+    path_data: str = "dataset"
+    create_annotation(path_data, path_to_annotation)
