@@ -1,3 +1,4 @@
+
 import csv
 import os
 import typing
@@ -26,11 +27,11 @@ def create_annotation(path_data: str, path_to_annotation: str) -> None:
     '''
     data: list[list[str]] = [["full_path", "path", "class"]]
 
-    dirs: list[str] = os.listdir(path_data)
+    dirs: list[str] = [d for d in os.listdir(path_data) if os.path.isdir(os.path.join(path_data, d))]
 
     for dir in dirs:
         path: str = os.path.join(path_data, dir)
-        files: list[str] = os.listdir(path)
+        files: list[str] = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
         for file in files:
             data.append([os.path.abspath(os.path.join(path, file)),
                          os.path.join(path, file),
@@ -40,6 +41,6 @@ def create_annotation(path_data: str, path_to_annotation: str) -> None:
 
 
 if __name__ == "__main__":
-    path_to_annotation: str = "annotation.csv"
+    path_to_annotation: str = "annotation1.csv"
     path_data: str = "dataset"
     create_annotation(path_data, path_to_annotation)
